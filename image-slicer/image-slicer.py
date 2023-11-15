@@ -9,19 +9,12 @@ PAGES = int(os.getenv("PAGES"))
 SPLITS = int(os.getenv("SPLITS"))
 OFFSET = int(os.getenv("OFFSET"))
 
-# # these are how much to move the slices up to align the images
-# offset_1 = 0
-# offset_2 = 0
-# offsets = [offset_1, offset_2]
 
-
-# Flag for bulk editing or page by page editing
-# 0 = page by page
-# 1 = bulk
-def main(is_bulk=False, page=0):
+def main(is_bulk=False, page=1):
     image_paths = []
     iter_pages = PAGES if is_bulk else 1
-
+    # The iteration is starting at 0
+    # Pages are starting at 1
     for p in range(iter_pages):
         if iter_pages == 1:
             p = page - 1
@@ -33,9 +26,9 @@ def main(is_bulk=False, page=0):
         multi_concat_vertical(images, OFFSET).save(f"{OUTPUT_PATH}0{p+1}.jpg")
 
 
-def get_image_paths(page, SPLITS):
+def get_image_paths(page, splits):
     image_paths = []
-    for s in range(SPLITS):
+    for s in range(splits):
         image_paths.append(f"{BASE_PATH}{page}-{s+1}.jpg")
     return image_paths
 
